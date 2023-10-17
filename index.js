@@ -53,8 +53,10 @@ app.get("/getpostcomments/:id", async (req, res) => {
   const id = req.params.id;
 
   const commentDetails = await Comment.findOne({ _id: id })
-    .populate("commentator")
-    .populate("postCommented");
+    .populate({
+      path: "commentator",
+    })
+    .populate({ path: "postCommented", populate: "postComment" });
   res.send(commentDetails);
 });
 
